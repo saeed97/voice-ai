@@ -1,0 +1,14 @@
+
+.MuiToolbar-root{
+    background-color: #9500ae;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 2%;
+    padding-top: 5px;
+  }

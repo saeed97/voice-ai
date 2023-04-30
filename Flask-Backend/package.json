@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.11",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.2",
+    "react-test-renderer": "^18.2.0"
+  }
+}

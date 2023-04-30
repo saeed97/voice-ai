@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Speech</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='speeches/speeches.css') }}">
+</head>
+<body>
+   
+    <form>
+        <div>
+          <label for="description">Description of Speech:</label>
+          <input type="text" id="description" name="description" minlength="40" required>
+        </div>
+      
+        <div>
+          <label for="tune">Tune of Speech:</label>
+          <select id="tune" name="tune">
+            <option value="sad">Sad</option>
+            <option value="funny">Funny</option>
+            <option value="cherry">Cheery</option>
+            <option value="sarcasm">Sarcasm</option>
+          </select>
+        </div>
+      
+        <div>
+          <label for="length">Length of Speech:</label>
+          <select id="length" name="length">
+            <option value="1">1 minute</option>
+            <option value="3">3 minutes</option>
+            <option value="5">5 minutes</option>
+          </select>
+        </div>
+      
+        <div>
+          <label for="speaker">Speaker:</label>
+          <select id="speaker" name="speaker">
+            <option value="1">John Doe</option>
+            <option value="2">Jane Doe</option>
+            <option value="3">Bob Smith</option>
+            <option value="4">Samantha Johnson</option>
+          </select>
+        </div>
+      
+        <button type="submit">Generate Speech</button>
+      </form>
+      
+      
+    <div class="wrapper">
+        <div class="title">
+          CSS Tabs Filtering
+        </div>
+        <div class="tabs_wrap">
+          <ul>
+            <li data-tabs="script">Script</li>
+            <li data-tabs="audio">Audio</li>
+            <li data-tabs="video" class="active">Video</li>
+          </ul>
+        </div>
+        <div class="container">
+          <ul>
+          </ul>
+        </div>
+      </div>
+      
+      
+</body>
+
+
+<script src="{{ url_for('static', filename='speeches/speeches.js') }}"></script>
+</html>

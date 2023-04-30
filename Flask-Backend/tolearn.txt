@@ -1,0 +1,9 @@
+- marshell
+ --- model is being used for user validation, user expectation for swag, and return format serlization from database 
+- feilds
+
+
+
+todo:
+- fix admin to not allowed create admin users
+- fix swag error if the payload is not correct

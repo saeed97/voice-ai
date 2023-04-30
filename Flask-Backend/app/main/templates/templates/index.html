@@ -1,0 +1,107 @@
+# create html template
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text-to-Speech Synthesis</title>
+</head>
+<body>
+  <h1>Text-to-Speech Synthesis</h1>
+  <form id="synthesize-form">
+    <label for="text">Enter text to synthesize:</label>
+    <input type="text" id="text" name="text">
+    <button type="submit">Synthesize</button>
+  </form>
+  <br>
+  <div>
+    <audio id="audio"></audio>
+    <div>
+      <input type="range" id="seek-bar" value="0" step="1">
+      <span id="time-display">0:00 / 0:00</span>
+      <button id="play-pause-button" type="button">Play</button>
+    </div>
+  </div>
+  <br>
+  <div id="synthesis-time-display"></div>
+
+  <script>
+    var form = document.getElementById('synthesize-form');
+    var audio = document.getElementById('audio');
+    var seekBar = document.getElementById('seek-bar');
+    var timeDisplay = document.getElementById('time-display');
+    var playPauseButton = document.getElementById('play-pause-button');
+    var synthesisTimeDisplay = document.getElementById('synthesis-time-display');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      var text = document.getElementById('text').value;
+      var start = Date.now();
+      headers = {}
+      if (localStorage.token) {
+        headers = { 'Authorization': localStorage.token,
+        'Content-Type': 'application/json'
+       }
+      }
+      else{
+        headers = {
+        'Content-Type': 'application/json'
+          }
+      }
+      fetch('/model/synthesize', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': headers
+      },
+      body: JSON.stringify({ 
+        "email": "admin",
+        "description": text,
+        "tune": "Sad",
+        "content": "creative",
+        "length" : 20
+      })
+    })
+      .then(function(response) {
+        return response.blob();
+      })
+      .then(function(blob) {
+        var url = URL.createObjectURL(blob);
+        audio.src = url;
+        audio.play();
+        playPauseButton.textContent = 'Pause';
+        var timeTaken = (Date.now() - start) / 1000;
+        synthesisTimeDisplay.textContent = 'Synthesis time: ' + timeTaken.toFixed(2) + ' seconds';
+      });
+    });
+
+    audio.addEventListener('timeupdate', function() {
+      var currentTime = audio.currentTime;
+      var duration = audio.duration;
+      seekBar.value = currentTime / duration * 100;
+      timeDisplay.textContent = formatTime(currentTime) + ' / ' + formatTime(duration);
+    });
+
+    seekBar.addEventListener('input', function() {
+      var time = seekBar.value / 100 * audio.duration;
+      audio.currentTime = time;
+    });
+
+    playPauseButton.addEventListener('click', function() {
+      if (audio.paused) {
+        audio.play();
+        playPauseButton.textContent = 'Pause';
+      } else {
+        audio.pause();
+        playPauseButton.textContent = 'Play';
+      }
+    });
+
+    function formatTime(time) {
+      var minutes = Math.floor(time / 60);
+      var seconds = Math.floor(time % 60);
+      return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    }
+  </script>
+</body>
+</html>
